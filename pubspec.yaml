@@ -1,0 +1,35 @@
+name: task_app
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=3.3.4 <4.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.6
+  get: 4.6.6
+  flutter: 
+    sdk: flutter
+  carbon_icons: ^0.0.1+2
+  shared_preferences: ^2.2.3
+  loading_animation_widget: ^1.1.0+3
+  carousel_slider: ^4.2.0
+  percent_indicator: ^4.2.3
+  home_widget: ^0.3.0
+  easy_date_timeline: ^1.0.3
+  flutter_calendar_carousel: ^2.4.3
+  table_calendar: ^3.0.1	
+  badges: ^3.1.2
+  google_fonts: ^4.0.4
+  shimmer: ^3.0.0
+
+dev_dependencies: 
+  flutter_lints: 4.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  uses-material-design: true
+  assets:
+    - lib/app/data/images/
+
