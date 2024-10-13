@@ -18,6 +18,7 @@ abstract class Routes {
   static const NEW_TASK = _Paths.NEW_TASK;
   static const NEW_RECURRING_TASK = _Paths.NEW_RECURRING_TASK;
   static const EDIT_PROFIL = _Paths.EDIT_PROFIL;
+  static const GANTT_CHART = _Paths.GANTT_CHART;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const NEW_TASK = '/new-task';
   static const NEW_RECURRING_TASK = '/new-recurring-task';
   static const EDIT_PROFIL = '/edit-profil';
+  static const GANTT_CHART = '/gantt-chart';
 }

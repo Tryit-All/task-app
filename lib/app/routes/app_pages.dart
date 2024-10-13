@@ -8,6 +8,8 @@ import '../modules/detail_tugas/bindings/detail_tugas_binding.dart';
 import '../modules/detail_tugas/views/detail_tugas_view.dart';
 import '../modules/edit_profil/bindings/edit_profil_binding.dart';
 import '../modules/edit_profil/views/edit_profil_view.dart';
+import '../modules/gantt_chart/bindings/gantt_chart_binding.dart';
+import '../modules/gantt_chart/views/gantt_chart_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/kalender/bindings/kalender_binding.dart';
@@ -113,6 +115,11 @@ class AppPages {
       name: _Paths.EDIT_PROFIL,
       page: () => EditProfilView(),
       binding: EditProfilBinding(),
+    ),
+    GetPage(
+      name: _Paths.GANTT_CHART,
+      page: () => GanttChartView(),
+      binding: GanttChartBinding(),
     ),
   ];
 }

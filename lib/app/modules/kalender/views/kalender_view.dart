@@ -9,6 +9,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:task_app/app/data/colors.dart';
 import 'package:task_app/app/data/utils/basic_example.dart';
 import 'package:task_app/app/data/utils/utils.dart';
+import 'package:task_app/app/modules/gantt_chart/views/gantt_chart_view.dart';
 import '../controllers/kalender_controller.dart';
 
 class KalenderView extends GetView<KalenderController> {
@@ -22,6 +23,15 @@ class KalenderView extends GetView<KalenderController> {
         centerTitle: true,
         toolbarHeight: 0.0,
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Get.to(() => GanttChartView());
+          },
+          backgroundColor: AppColors.primaryColor,
+          child: Icon(
+            Icons.waterfall_chart_rounded,
+            color: Colors.white,
+          )),
       body: Container(
         child: Column(
           children: [
