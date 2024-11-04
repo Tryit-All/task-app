@@ -4,6 +4,8 @@ import '../modules/add_tim/bindings/add_tim_binding.dart';
 import '../modules/add_tim/views/add_tim_view.dart';
 import '../modules/all_team/bindings/all_team_binding.dart';
 import '../modules/all_team/views/all_team_view.dart';
+import '../modules/detail_reminder/bindings/detail_reminder_binding.dart';
+import '../modules/detail_reminder/views/detail_reminder_view.dart';
 import '../modules/detail_tugas/bindings/detail_tugas_binding.dart';
 import '../modules/detail_tugas/views/detail_tugas_view.dart';
 import '../modules/edit_profil/bindings/edit_profil_binding.dart';
@@ -28,6 +30,8 @@ import '../modules/profil/bindings/profil_binding.dart';
 import '../modules/profil/views/profil_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/reminder/bindings/reminder_binding.dart';
+import '../modules/reminder/views/reminder_view.dart';
 import '../modules/splashscreen/bindings/splashscreen_binding.dart';
 import '../modules/splashscreen/views/splashscreen_view.dart';
 import '../modules/tugas/bindings/tugas_binding.dart';
@@ -120,6 +124,16 @@ class AppPages {
       name: _Paths.GANTT_CHART,
       page: () => GanttChartView(),
       binding: GanttChartBinding(),
+    ),
+    GetPage(
+      name: _Paths.REMINDER,
+      page: () => ReminderView(),
+      binding: ReminderBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_REMINDER,
+      page: () => DetailReminderView(payload: Get.arguments),
+      binding: DetailReminderBinding(),
     ),
   ];
 }

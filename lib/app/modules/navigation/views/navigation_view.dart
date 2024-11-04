@@ -41,7 +41,13 @@ class NavigationView extends GetView<NavigationController> {
         builder: (controller) {
           return IndexedStack(
             index: controller.tabIndex,
-            children: [HomeView(), KalenderView(), TugasView(), ProfilView()],
+            children: [
+              HomeView(),
+              KalenderView(),
+              TugasView(),
+              Container(),
+              ProfilView()
+            ],
           );
         },
       ),
@@ -67,8 +73,8 @@ class NavigationView extends GetView<NavigationController> {
                   0.0, // Tidak diperlukan karena shadow ditangani oleh Container
               backgroundColor: Colors.white,
               currentIndex: controller.tabIndex,
-              selectedItemColor: Color(0xFF0168A5),
-              unselectedItemColor: Color(0xFFD1D1D1),
+              selectedItemColor: Color(0xFF5451D6),
+              unselectedItemColor: Color(0xFF8C8C8C),
               onTap: (index) {
                 nav.updateCurrentScreen(index);
               },
@@ -90,8 +96,24 @@ class NavigationView extends GetView<NavigationController> {
                   label: 'Kalender',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(CarbonIcons.catalog, size: 30),
+                  icon: Image.asset(
+                    controller.tabIndex == 2
+                        ? 'lib/app/data/images/tugas_select.png'
+                        : 'lib/app/data/images/tugas.png',
+                    height: 25, // Sesuaikan dengan tinggi yang Anda inginkan
+                    width: 25,
+                  ),
                   label: 'Tugas',
+                ),
+                BottomNavigationBarItem(
+                  icon: Image.asset(
+                    controller.tabIndex == 3
+                        ? 'lib/app/data/images/target_select.png'
+                        : 'lib/app/data/images/target.png',
+                    height: 25, // Sesuaikan dengan tinggi yang Anda inginkan
+                    width: 25,
+                  ),
+                  label: 'Target',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
