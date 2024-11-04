@@ -10,6 +10,7 @@ import 'package:task_app/app/data/colors.dart';
 import 'package:task_app/app/data/utils/basic_example.dart';
 import 'package:task_app/app/data/utils/utils.dart';
 import 'package:task_app/app/modules/gantt_chart/views/gantt_chart_view.dart';
+import 'package:task_app/app/modules/reminder/views/reminder_view.dart';
 import '../controllers/kalender_controller.dart';
 
 class KalenderView extends GetView<KalenderController> {
@@ -25,7 +26,9 @@ class KalenderView extends GetView<KalenderController> {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
+            // NB: Uncomment to use any of the functions
             Get.to(() => GanttChartView());
+            // Get.to(() => ReminderView());
           },
           backgroundColor: AppColors.primaryColor,
           child: Icon(
