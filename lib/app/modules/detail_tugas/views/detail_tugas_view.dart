@@ -10,6 +10,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:task_app/app/data/colors.dart';
 import 'package:task_app/app/modules/add_tim/views/add_tim_view.dart';
 import 'package:task_app/app/modules/all_team/views/all_team_view.dart';
+import 'package:task_app/app/modules/target_dialog/controllers/target_dialog_controller.dart';
 
 import '../controllers/detail_tugas_controller.dart';
 
@@ -18,6 +19,8 @@ class DetailTugasView extends GetView<DetailTugasController> {
   final DetailTugasController detailTugas = Get.put(DetailTugasController());
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
+    String title = args['title'];
     final query = MediaQuery.of(context);
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
@@ -54,7 +57,16 @@ class DetailTugasView extends GetView<DetailTugasController> {
         ),
         body: SingleChildScrollView(
             child: Container(
-          color: AppColors.secondsaryColor,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFFFFFFFF), // Warna putih
+                Color(0xffF8F6FF), // Warna ungu muda
+              ],
+              begin: Alignment.topCenter, // Awal gradien
+              end: Alignment.bottomCenter, // Akhir gradien
+            ),
+          ),
           width: MediaQuery.of(context).size.width,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -283,10 +295,23 @@ class DetailTugasView extends GetView<DetailTugasController> {
                 //       ],
                 //     )),
                 SizedBox(height: 20),
-                Text("Sub-tugas",
-                    style: TextStyle(
-                        fontSize: textScaleFactor <= 1.15 ? 18 : 14,
-                        fontWeight: FontWeight.bold)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("tugas",
+                        style: TextStyle(
+                            fontSize: textScaleFactor <= 1.15 ? 18 : 14,
+                            fontWeight: FontWeight.bold)),
+                    title.toString() == "Proyek Baru"
+                        ? GestureDetector(
+                            onTap: () => showTargetDialog("proyek baru"),
+                            child: Icon(
+                              Icons.add_box,
+                              color: AppColors.primaryColor,
+                            ))
+                        : SizedBox()
+                  ],
+                ),
                 SizedBox(height: 10),
                 Obx(
                   () => ListView.builder(

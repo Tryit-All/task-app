@@ -6,17 +6,21 @@ import 'package:task_app/app/data/colors.dart';
 import 'package:task_app/app/data/utils/tab_kebiasaan.dart';
 import 'package:task_app/app/data/utils/tab_tugas.dart';
 import 'package:task_app/app/data/utils/tab_tugas_berulang.dart';
+import 'package:task_app/app/data/utils/task_manager.dart';
 
 import '../controllers/tugas_controller.dart';
 import 'package:badges/badges.dart' as badges;
 
 class TugasView extends GetView<TugasController> {
   TugasView({Key? key}) : super(key: key);
-  TugasController tugasController = Get.put(TugasController());
+  TugasController tugasController = Get.put(TugasController(""));
 
   @override
   Widget build(BuildContext context) {
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    final TaskManager taskManager = TaskManager();
+
+    final tasks = taskManager.getAllTasks();
 
     final mediaHeight = MediaQuery.of(context).size.height;
     final myAppbar = AppBar(
@@ -46,7 +50,7 @@ class TugasView extends GetView<TugasController> {
       title: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Text(
-          "List Tugas",
+          "List Tersimpan",
           style: GoogleFonts.poppins(
               textStyle: TextStyle(
                   fontSize: 20,
@@ -64,7 +68,7 @@ class TugasView extends GetView<TugasController> {
               showBadge: (true),
               badgeAnimation: badges.BadgeAnimation.slide(),
               badgeContent: Text(
-                (0).toString(),
+                tasks.length.toString(),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: textScaleFactor <= 1.15 ? 12 : 10,

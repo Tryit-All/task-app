@@ -274,8 +274,12 @@ class LoginView extends GetView<LoginController> {
                         child: Padding(
                           padding: const EdgeInsets.only(
                               top: 15, bottom: 15, left: 15, right: 15),
-                          child: Icon(CarbonIcons.logo_google,
-                              color: Colors.black),
+                          child: Container(
+                            height: 24,
+                            width: 24,
+                            child: Image.asset(
+                                "lib/app/data/images/Logo-google.png"),
+                          ),
                         ),
                       ),
                     ),

@@ -4,6 +4,10 @@ import '../modules/add_tim/bindings/add_tim_binding.dart';
 import '../modules/add_tim/views/add_tim_view.dart';
 import '../modules/all_team/bindings/all_team_binding.dart';
 import '../modules/all_team/views/all_team_view.dart';
+import '../modules/calender_dialog/bindings/calender_dialog_binding.dart';
+import '../modules/calender_dialog/views/calender_dialog_view.dart';
+import '../modules/clock_dialog/bindings/clock_dialog_binding.dart';
+import '../modules/clock_dialog/views/clock_dialog_view.dart';
 import '../modules/detail_reminder/bindings/detail_reminder_binding.dart';
 import '../modules/detail_reminder/views/detail_reminder_view.dart';
 import '../modules/detail_tugas/bindings/detail_tugas_binding.dart';
@@ -12,12 +16,22 @@ import '../modules/edit_profil/bindings/edit_profil_binding.dart';
 import '../modules/edit_profil/views/edit_profil_view.dart';
 import '../modules/gantt_chart/bindings/gantt_chart_binding.dart';
 import '../modules/gantt_chart/views/gantt_chart_view.dart';
+import '../modules/goals/bindings/goals_binding.dart';
+import '../modules/goals/views/goals_view.dart';
+import '../modules/goals_crud/bindings/goals_crud_binding.dart';
+import '../modules/goals_crud/views/goals_crud_view.dart';
+import '../modules/goals_detail/bindings/goals_detail_binding.dart';
+import '../modules/goals_detail/views/goals_detail_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/kalender/bindings/kalender_binding.dart';
 import '../modules/kalender/views/kalender_view.dart';
+import '../modules/kebiasaan_baru/bindings/kebiasaan_baru_binding.dart';
+import '../modules/kebiasaan_baru/views/kebiasaan_baru_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/money_dialog/bindings/money_dialog_binding.dart';
+import '../modules/money_dialog/views/money_dialog_view.dart';
 import '../modules/navigation/bindings/navigation_binding.dart';
 import '../modules/navigation/views/navigation_view.dart';
 import '../modules/new_recurring_task/bindings/new_recurring_task_binding.dart';
@@ -28,12 +42,16 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/profil/bindings/profil_binding.dart';
 import '../modules/profil/views/profil_view.dart';
+import '../modules/proyek_baru/bindings/proyek_baru_binding.dart';
+import '../modules/proyek_baru/views/proyek_baru_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/reminder/bindings/reminder_binding.dart';
 import '../modules/reminder/views/reminder_view.dart';
 import '../modules/splashscreen/bindings/splashscreen_binding.dart';
 import '../modules/splashscreen/views/splashscreen_view.dart';
+import '../modules/target_dialog/bindings/target_dialog_binding.dart';
+import '../modules/target_dialog/views/target_dialog_view.dart';
 import '../modules/tugas/bindings/tugas_binding.dart';
 import '../modules/tugas/views/tugas_view.dart';
 
@@ -134,6 +152,51 @@ class AppPages {
       name: _Paths.DETAIL_REMINDER,
       page: () => DetailReminderView(payload: Get.arguments),
       binding: DetailReminderBinding(),
+    ),
+    GetPage(
+      name: _Paths.CALENDER_DIALOG,
+      page: () => const CalenderDialogView(),
+      binding: CalenderDialogBinding(),
+    ),
+    GetPage(
+      name: _Paths.CLOCK_DIALOG,
+      page: () => ClockDialogView(),
+      binding: ClockDialogBinding(),
+    ),
+    GetPage(
+      name: _Paths.GOALS_CRUD,
+      page: () => GoalsCrudView(),
+      binding: GoalsCrudBinding(),
+    ),
+    GetPage(
+      name: _Paths.GOALS_DETAIL,
+      page: () => GoalsDetailView(),
+      binding: GoalsDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.GOALS,
+      page: () => const GoalsView(),
+      binding: GoalsBinding(),
+    ),
+    GetPage(
+      name: _Paths.MONEY_DIALOG,
+      page: () => MoneyDialogView(),
+      binding: MoneyDialogBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROYEK_BARU,
+      page: () => ProyekBaruView(),
+      binding: ProyekBaruBinding(),
+    ),
+    GetPage(
+      name: _Paths.KEBIASAAN_BARU,
+      page: () => KebiasaanBaruView(),
+      binding: KebiasaanBaruBinding(),
+    ),
+    GetPage(
+      name: _Paths.TARGET_DIALOG,
+      page: () => TargetDialogView(),
+      binding: TargetDialogBinding(),
     ),
   ];
 }

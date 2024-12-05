@@ -42,7 +42,18 @@ class GanttChartController extends GetxController {
       case GanttViewMode.weekly:
         return 150.0;
       case GanttViewMode.monthly:
-        return 170.0;
+        return 600.0;
+    }
+  }
+
+  double getTaskStartPositionText(double taskStart) {
+    switch (cellWidthNew) {
+      case 150.0:
+        return (taskStart / 7) * cellWidthNew + 80;
+      case 600.0:
+        return (taskStart / 30) * cellWidthNew + 80;
+      default:
+        return taskStart * cellWidthNew;
     }
   }
 
@@ -50,7 +61,7 @@ class GanttChartController extends GetxController {
     switch (cellWidthNew) {
       case 150.0:
         return (taskStart / 7) * cellWidthNew;
-      case 170.0:
+      case 600.0:
         return (taskStart / 30) * cellWidthNew;
       default:
         return taskStart * cellWidthNew;
@@ -61,7 +72,7 @@ class GanttChartController extends GetxController {
     switch (cellWidthNew) {
       case 150.0:
         return (taskDuration / 7) * cellWidthNew;
-      case 170.0:
+      case 600.0:
         return (taskDuration / 30) * cellWidthNew;
       default:
         return taskDuration * cellWidthNew;

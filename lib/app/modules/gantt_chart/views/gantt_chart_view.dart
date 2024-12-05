@@ -373,6 +373,50 @@ class GanttChartView extends GetView<GanttChartController> {
                           controller.currentViewMode.value, // Add this line
                     ),
                   ),
+                  if (!isSelected) ...[
+                    Positioned(
+                        left: controller
+                                .getTaskStartPosition(taskStart.toDouble()) +
+                            25,
+                        top: 10,
+                        child: Obx(
+                          () => Text(
+                            "${task.name}: ${(task.progress.value * 100).toStringAsFixed(0)}%",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                  ],
+                  if (task.isParent) ...[
+                    if (isSelected) ...[
+                      Positioned(
+                          left: controller
+                                  .getTaskStartPosition(taskStart.toDouble()) +
+                              25,
+                          top: 10,
+                          child: GestureDetector(
+                            onLongPress: () {
+                              // Show tooltip on long press
+                              ganttChartController.tooltipController
+                                  .showTooltip();
+                              print("Keluar dari parent");
+                            },
+                            onLongPressEnd: (details) {
+                              ganttChartController.tooltipController
+                                  .hideTooltip();
+                            },
+                            child: Obx(
+                              () => Text(
+                                "${task.name}: ${(task.progress.value * 100).toStringAsFixed(0)}%",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )),
+                    ]
+                  ],
                   if (!task.isParent) ...[
                     if (isSelected) ...[
                       Positioned(
@@ -380,22 +424,6 @@ class GanttChartView extends GetView<GanttChartController> {
                             .getTaskStartPosition(taskStart.toDouble()),
                         top: 0,
                         bottom: 0,
-                        width: controller.getTaskWidth(
-                            taskStart.toDouble(), taskDuration.toDouble()),
-                        child: GestureDetector(
-                          onHorizontalDragUpdate: (details) {
-                            controller.moveEntireTask(task, details.delta.dx);
-                          },
-                          child: Container(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: controller
-                            .getTaskStartPosition(taskStart.toDouble()),
-                        top: 0,
-                        bottom: 30,
                         width: controller.getTaskWidth(
                             taskStart.toDouble(), taskDuration.toDouble()),
                         child: GestureDetector(
@@ -408,6 +436,9 @@ class GanttChartView extends GetView<GanttChartController> {
                           onLongPressEnd: (details) {
                             ganttChartController.tooltipController
                                 .hideTooltip();
+                          },
+                          onHorizontalDragUpdate: (details) {
+                            controller.moveEntireTask(task, details.delta.dx);
                           },
                           child: MouseRegion(
                             child: SuperTooltip(
@@ -600,20 +631,21 @@ class GanttChartView extends GetView<GanttChartController> {
                           },
                         ),
                       ),
+                      Positioned(
+                          left: controller.getTaskStartPositionText(
+                                  taskStart.toDouble()) +
+                              25,
+                          top: 10,
+                          child: Obx(
+                            () => Text(
+                              "${task.name}: ${(task.progress.value * 100).toStringAsFixed(0)}%",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )),
                     ],
                   ],
-                  Positioned(
-                      left: controller
-                              .getTaskStartPosition(taskStart.toDouble()) +
-                          25,
-                      top: 10,
-                      child: Obx(
-                        () => Text(
-                          "${task.name}: ${(task.progress.value * 100).toStringAsFixed(0)}%",
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                        ),
-                      )),
                 ],
               ),
             ],

@@ -9,6 +9,8 @@ class HomeController extends GetxController {
   var inner = 0.obs;
   var tasks = <Task>[].obs;
   late CarouselController carouselController;
+  final List<String> tabs = ['Tim', 'Goals'];
+  final RxInt selectedIndex = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -37,6 +39,10 @@ class HomeController extends GetxController {
     ];
 
     tasks.assignAll(taskList);
+  }
+
+  void changeTab(int index) {
+    selectedIndex.value = index;
   }
 
   void toggleTaskCompletion(int index) {

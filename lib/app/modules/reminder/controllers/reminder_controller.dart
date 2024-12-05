@@ -66,6 +66,8 @@ class ReminderController extends GetxController {
         "eventTime": eventTime.value!.format(Get.context!),
       });
 
+      print(payload);
+
       await notificationService.showNotification(
         id: 0,
         title: textEditingController.text,
