@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:task_app/app/modules/calender_dialog/controllers/calender_dialog_controller.dart';
+import 'package:task_app/app/modules/calender_dialog/views/calender_dialog_view.dart';
+import 'package:task_app/app/modules/clock_dialog/controllers/clock_dialog_controller.dart';
 
 class NewRecurringTaskController extends GetxController {
   //TODO: Implement NewRecurringTaskController
@@ -19,6 +22,11 @@ class NewRecurringTaskController extends GetxController {
   }.obs;
   var isSwitchOn = false.obs;
   var powerOn = false.obs;
+  final CalenderDialogController calenderDialogController =
+      Get.put(CalenderDialogController());
+
+  final ClockDialogController clockDialogController =
+      Get.put(ClockDialogController());
 
   @override
   void onInit() {
@@ -58,16 +66,13 @@ class NewRecurringTaskController extends GetxController {
   }
 
   void toggleSwitch() {
-    if (isSwitchOn.value) {
-      Get.snackbar(
-        'Mode Otomatis',
-        'Tidak dapat mengubah switch secara manual saat mode otomatis aktif.',
-        snackPosition: SnackPosition.TOP,
-        duration: Duration(seconds: 3),
-      );
-    } else {
+    if (!isSwitchOn.value) {
       powerOn.value = !powerOn.value;
-      // onTap();
+      print("object");
+    }
+
+    if (powerOn.value) {
+      showCalendarDialog();
     }
   }
 }

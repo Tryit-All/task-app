@@ -11,6 +11,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/get_transition_mixin.dart';
 import 'package:task_app/app/data/colors.dart';
+import 'package:task_app/app/modules/calender_dialog/views/calender_dialog_view.dart';
+import 'package:task_app/app/modules/clock_dialog/views/clock_dialog_view.dart';
 
 import '../controllers/new_task_controller.dart';
 
@@ -66,6 +68,7 @@ class NewTaskView extends GetView<NewTaskController> {
                 child: GestureDetector(
                   onTap: () {
                     // Get.to(AllTeamView());
+                    controller.createTask();
                   },
                   child: Text(
                     "Selesai",
@@ -87,7 +90,7 @@ class NewTaskView extends GetView<NewTaskController> {
                     color: Colors.white,
                     width: double.infinity,
                     child: TextFormField(
-                      // controller: login.emailAddressTextController,
+                      controller: controller.taskTitleController,
                       // focusNode: login.emailAddressFocusNode,
                       autofocus: true,
                       autofillHints: [AutofillHints.email],
@@ -292,6 +295,8 @@ class NewTaskView extends GetView<NewTaskController> {
                                                 .bodyText1,
                                             keyboardType:
                                                 TextInputType.emailAddress,
+                                            controller: controller
+                                                .taskDescriptionController,
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
@@ -325,38 +330,52 @@ class NewTaskView extends GetView<NewTaskController> {
                                               ],
                                             ),
                                           ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 10),
-                                            child: Row(
-                                              children: [
-                                                Icon(CupertinoIcons.bell,
-                                                    color:
-                                                        AppColors.primaryColor),
-                                                SizedBox(width: 10),
-                                                Text(
-                                                  "Pengikut",
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                        textScaleFactor <= 1.15
-                                                            ? 13
-                                                            : 10,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                                Spacer(),
-                                                CircleAvatar(
-                                                  radius: 15,
-                                                  backgroundColor:
-                                                      AppColors.trinaryColor,
-                                                  child: Text(
-                                                    "0",
+                                          GestureDetector(
+                                            onTap: () {
+                                              showClockDialog();
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10),
+                                              child: Row(
+                                                children: [
+                                                  Icon(CupertinoIcons.bell,
+                                                      color: AppColors
+                                                          .primaryColor),
+                                                  SizedBox(width: 10),
+                                                  Text(
+                                                    "Pengingat",
                                                     style: TextStyle(
-                                                        color: AppColors
-                                                            .primaryColor),
+                                                      fontSize:
+                                                          textScaleFactor <=
+                                                                  1.15
+                                                              ? 13
+                                                              : 10,
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                  Spacer(),
+                                                  Container(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              5, 2, 5, 2),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                        color: AppColors
+                                                            .trinaryColor,
+                                                      ),
+                                                      child: Obx(
+                                                        () => Text(
+                                                          "${controller.selectedHour.value.toString().padLeft(2, '0')}:${controller.selectedMinute.value.toString().padLeft(2, '0')}", // Format hh:mm
+                                                          style: TextStyle(
+                                                              color: AppColors
+                                                                  .primaryColor),
+                                                        ),
+                                                      ))
+                                                ],
+                                              ),
                                             ),
                                           ),
                                           GestureDetector(
@@ -480,6 +499,11 @@ class NewTaskView extends GetView<NewTaskController> {
                 GestureDetector(
                   onTap: () {
                     print(controller.selectedTime.value);
+                    Get.snackbar(
+                      'Success',
+                      'Waktu berhasil dipilih',
+                      snackPosition: SnackPosition.TOP,
+                    );
                   },
                   child: Text(
                     "Pilih Waktu",

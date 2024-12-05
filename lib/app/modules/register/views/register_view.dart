@@ -312,8 +312,11 @@ class RegisterView extends GetView<RegisterController> {
                         child: Padding(
                           padding: const EdgeInsets.only(
                               top: 15, bottom: 15, left: 15, right: 15),
-                          child: Icon(
-                            CarbonIcons.logo_google,
+                          child: Container(
+                            height: 24,
+                            width: 24,
+                            child: Image.asset(
+                                "lib/app/data/images/Logo-google.png"),
                           ),
                         ),
                       ),

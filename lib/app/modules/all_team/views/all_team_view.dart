@@ -62,6 +62,16 @@ class AllTeamView extends GetView<AllTeamController> {
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: Column(
               children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Anggota Tim',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
                 Obx(() => allTeam.selectFilter.value
                     ? GestureDetector(
                         onTap: () {
@@ -117,9 +127,11 @@ class AllTeamView extends GetView<AllTeamController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "${allTeam.member.length} Anggota",
-                        style: TextStyle(color: Colors.grey),
+                      Obx(
+                        () => Text(
+                          "${allTeam.participants.length} Anggota",
+                          style: TextStyle(color: Colors.grey),
+                        ),
                       ),
                       Obx(
                         () => allTeam.selectFilter.value
@@ -137,100 +149,205 @@ class AllTeamView extends GetView<AllTeamController> {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Get.to(AddTimView());
-                  },
-                  child: ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    leading: CircleAvatar(
-                      backgroundColor: AppColors.primaryColor,
-                      child: Icon(Icons.person_add_alt_1_rounded,
-                          color: Colors.white),
+                // GestureDetector(
+                //   onTap: () {
+                //     Get.to(AddTimView());
+                //   },
+                //   child: ListTile(
+                //     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                //     leading: CircleAvatar(
+                //       backgroundColor: AppColors.primaryColor,
+                //       child: Icon(Icons.person_add_alt_1_rounded,
+                //           color: Colors.white),
+                //     ),
+                //     title: Text(
+                //       "Tambah Anggota",
+                //       style: TextStyle(
+                //           fontSize: textScaleFactor <= 1.15 ? 13 : 10,
+                //           color: Colors.black),
+                //     ),
+                //   ),
+                // ),
+                Container(
+                    height: MediaQuery.of(context).size.height * 0.65,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.grey.shade300,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20.0),
+                      ),
                     ),
-                    title: Text(
-                      "Tambah Anggota",
-                      style: TextStyle(
-                          fontSize: textScaleFactor <= 1.15 ? 13 : 10,
-                          color: Colors.black),
-                    ),
-                  ),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: allTeam.member.length,
-                  itemBuilder: (context, index) {
-                    final member = allTeam.member[index];
-                    return Column(
+                    child: Column(
                       children: [
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Divider(
-                          height: 1,
-                          color: Colors.grey[300],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        ListTile(
-                            contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            leading: CircleAvatar(
-                              radius: 20,
-                              backgroundImage: NetworkImage(member.image),
-                            ),
-                            title: Text(
-                              member.nama,
-                              style: TextStyle(
-                                  fontSize: textScaleFactor <= 1.15 ? 13 : 10,
-                                  color: Colors.black),
-                            ),
-                            trailing: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: member.status == 'Admin'
-                                        ? Color.fromARGB(255, 231, 208, 236)
-                                        : Color.fromARGB(255, 241, 226, 187)),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                                  child: Text(
-                                    member.status,
-                                    style: TextStyle(
-                                        fontSize:
-                                            textScaleFactor <= 1.15 ? 15 : 13,
-                                        color: member.status == 'Admin'
-                                            ? AppColors.quaternaryColor
-                                            : AppColors.quinaryColor),
+                        SizedBox(height: 25),
+                        Container(
+                          height: 35,
+                          margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(
+                                color: Colors.grey.shade300, width: 2),
+                          ),
+                          child: Row(
+                            children: List.generate(
+                              controller.tabs.length,
+                              (index) => Expanded(
+                                child: Obx(
+                                  () => GestureDetector(
+                                    onTap: () => controller.changeTab(index),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color:
+                                            controller.selectedTabIndex.value ==
+                                                    index
+                                                ? Colors.white
+                                                : Colors.transparent,
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          controller.tabs[index],
+                                          style: TextStyle(
+                                            color: controller.selectedTabIndex
+                                                        .value ==
+                                                    index
+                                                ? Colors.black
+                                                : Colors.grey,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ))),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Expanded(
+                          child: Obx(() {
+                            final currentList = controller.getCurrentList();
+                            return ListView.builder(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              itemCount: currentList.length,
+                              itemBuilder: (context, index) {
+                                final member = currentList[index];
+                                return ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: NetworkImage(member.image),
+                                  ),
+                                  title: Text(
+                                    member.nama,
+                                    style: TextStyle(
+                                      fontSize:
+                                          textScaleFactor <= 1.15 ? 13 : 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: member.status == 'Admin'
+                                              ? Color.fromARGB(
+                                                  255, 231, 208, 236)
+                                              : member.status == 'Member'
+                                                  ? Color.fromARGB(
+                                                      255, 241, 226, 187)
+                                                  : Colors.transparent,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              15, 5, 15, 5),
+                                          child: Text(
+                                            member.status,
+                                            style: TextStyle(
+                                              fontSize: textScaleFactor <= 1.15
+                                                  ? 15
+                                                  : 13,
+                                              color: member.status == 'Admin'
+                                                  ? AppColors.quaternaryColor
+                                                  : member.status == 'Member'
+                                                      ? AppColors.quinaryColor
+                                                      : Colors.transparent,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      if (member.type == 'invite')
+                                        Checkbox(
+                                          value: member.isSelected,
+                                          onChanged: (bool? value) {
+                                            controller.toggleSelection(index);
+                                          },
+                                        ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }),
+                        ),
+                        SizedBox(height: 20),
                       ],
-                    );
-                  },
-                ),
+                    )),
               ],
             ),
           ),
         ),
-        bottomNavigationBar: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.1,
-          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-          child: Row(
-            children: [
-              Icon(
-                Icons.logout,
-                color: Colors.red,
-              ),
-              SizedBox(width: 10),
-              Text(
-                'Keluar dari tim',
-                style: TextStyle(color: Colors.red),
-              ),
-            ],
-          ),
-        ),
+        bottomNavigationBar: Obx(() {
+          final selectedCount = controller.selectedInvitesCount;
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(18, 15, 18, 15),
+            child: selectedCount > 0
+                ? ElevatedButton(
+                    onPressed: controller.addSelectedParticipants,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      'Add Selected Participants ($selectedCount)',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                : Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.logout,
+                          color: Colors.red,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'Keluar dari tim',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ],
+                    ),
+                  ),
+          );
+        }),
       ),
     );
   }

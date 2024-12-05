@@ -21,6 +21,15 @@ abstract class Routes {
   static const GANTT_CHART = _Paths.GANTT_CHART;
   static const REMINDER = _Paths.REMINDER;
   static const DETAIL_REMINDER = _Paths.DETAIL_REMINDER;
+  static const CALENDER_DIALOG = _Paths.CALENDER_DIALOG;
+  static const CLOCK_DIALOG = _Paths.CLOCK_DIALOG;
+  static const GOALS_CRUD = _Paths.GOALS_CRUD;
+  static const GOALS_DETAIL = _Paths.GOALS_DETAIL;
+  static const GOALS = _Paths.GOALS;
+  static const MONEY_DIALOG = _Paths.MONEY_DIALOG;
+  static const PROYEK_BARU = _Paths.PROYEK_BARU;
+  static const KEBIASAAN_BARU = _Paths.KEBIASAAN_BARU;
+  static const TARGET_DIALOG = _Paths.TARGET_DIALOG;
 }
 
 abstract class _Paths {
@@ -43,4 +52,13 @@ abstract class _Paths {
   static const GANTT_CHART = '/gantt-chart';
   static const REMINDER = '/reminder';
   static const DETAIL_REMINDER = '/detail-reminder';
+  static const CALENDER_DIALOG = '/calender-dialog';
+  static const CLOCK_DIALOG = '/clock-dialog';
+  static const GOALS_CRUD = '/goals-crud';
+  static const GOALS_DETAIL = '/goals-detail';
+  static const GOALS = '/goals';
+  static const MONEY_DIALOG = '/money-dialog';
+  static const PROYEK_BARU = '/proyek-baru';
+  static const KEBIASAAN_BARU = '/kebiasaan-baru';
+  static const TARGET_DIALOG = '/target-dialog';
 }

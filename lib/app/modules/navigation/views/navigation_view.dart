@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:task_app/app/modules/goals/views/goals_view.dart';
 import 'package:task_app/app/modules/kalender/views/kalender_view.dart';
 import 'package:task_app/app/modules/profil/views/profil_view.dart';
 import 'package:task_app/app/modules/tugas/views/tugas_view.dart';
@@ -45,7 +46,7 @@ class NavigationView extends GetView<NavigationController> {
               HomeView(),
               KalenderView(),
               TugasView(),
-              Container(),
+              GoalsView(),
               ProfilView()
             ],
           );

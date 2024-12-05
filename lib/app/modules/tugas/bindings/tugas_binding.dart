@@ -6,7 +6,7 @@ class TugasBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<TugasController>(
-      () => TugasController(),
+      () => TugasController(""),
     );
   }
 }

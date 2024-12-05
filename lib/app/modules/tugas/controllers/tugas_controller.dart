@@ -1,12 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 class TugasController extends GetxController with GetTickerProviderStateMixin {
   //TODO: Implement TugasController
 
   late AnimationController _controller;
   late TabController tabController;
+  final left = 0.0.obs;
+
+  final RxDouble offset = 0.0.obs;
+  final String taskId;
+
+  TugasController(this.taskId);
+
   final count = 0.obs;
   @override
   void onInit() {

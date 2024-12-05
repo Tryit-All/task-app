@@ -5,20 +5,33 @@ import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import 'package:intl/intl.dart';
 import 'dart:math' as math;
 
 import 'package:get/get.dart';
 import 'package:task_app/app/data/colors.dart';
+import 'package:task_app/app/modules/calender_dialog/controllers/calender_dialog_controller.dart';
+import 'package:task_app/app/modules/calender_dialog/views/calender_dialog_view.dart';
+import 'package:task_app/app/modules/clock_dialog/controllers/clock_dialog_controller.dart';
+import 'package:task_app/app/modules/clock_dialog/views/clock_dialog_view.dart';
 
 import '../controllers/new_recurring_task_controller.dart';
 
 class NewRecurringTaskView extends GetView<NewRecurringTaskController> {
   NewRecurringTaskView({Key? key}) : super(key: key);
-  final NewRecurringTaskController controller =
-      Get.put(NewRecurringTaskController());
+  final controller = Get.put(NewRecurringTaskController());
+
+  final CalenderDialogController calenderDialogController =
+      Get.put(CalenderDialogController());
+
+  final ClockDialogController clockDialogController =
+      Get.put(ClockDialogController());
+
   @override
   Widget build(BuildContext context) {
     final query = MediaQuery.of(context);
+
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return MediaQuery(
@@ -464,7 +477,7 @@ class NewRecurringTaskView extends GetView<NewRecurringTaskController> {
                             Obx(
                               () => RadioListTile<int>(
                                 contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                title: const Text('Berulang'),
+                                title: const Text('Siklus aktivitas-istirahat'),
                                 value: 4,
                                 groupValue: controller.selectedValue.value,
                                 onChanged: (value) {
@@ -611,8 +624,9 @@ class NewRecurringTaskView extends GetView<NewRecurringTaskController> {
                                   value: controller.isSwitchOn.value
                                       ? false
                                       : controller.powerOn.value,
-                                  onChanged: (value) =>
-                                      controller.toggleSwitch(),
+                                  onChanged: (value) {
+                                    controller.toggleSwitch();
+                                  },
                                   activeColor: AppColors.primaryColor,
                                   trackColor: Color.fromARGB(44, 114, 110, 110),
                                 ),
@@ -628,44 +642,75 @@ class NewRecurringTaskView extends GetView<NewRecurringTaskController> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: AppColors.trinaryColor,
-                                          ),
-                                          child: Text(
-                                            "28/04/2024",
-                                            style: TextStyle(
-                                                color: AppColors.primaryColor),
-                                          )),
+                                      GestureDetector(
+                                        onTap: () {
+                                          showCalendarDialog();
+                                        },
+                                        child: Container(
+                                            padding: EdgeInsets.fromLTRB(
+                                                10, 5, 10, 5),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: AppColors.trinaryColor,
+                                            ),
+                                            child: Text(
+                                              DateFormat('dd/MM/yyyy').format(
+                                                  calenderDialogController
+                                                      .selectedDate.value),
+                                              style: TextStyle(
+                                                  color:
+                                                      AppColors.primaryColor),
+                                            )),
+                                      ),
                                       Expanded(
                                         child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 0, 20, 0),
-                                          child: TextFormField(
-                                            initialValue: null,
-                                            onChanged: (text) {
-                                              // Fungsi untuk memproses teks yang dimasukkan
-                                              // home.loadWisataAll(text);
-                                            },
-                                            decoration:
-                                                InputDecoration.collapsed(
-                                              hintText: "",
-                                              border: UnderlineInputBorder(),
-                                              hintStyle: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.grey[500],
-                                                fontFamily: 'Mulish',
-                                              ),
-                                            ),
-                                            onFieldSubmitted: (value) {
-                                              // Fungsi untuk memproses input setelah pengguna menekan Enter
-                                            },
-                                          ),
-                                        ),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                20, 0, 20, 0),
+                                            child: Obx(() {
+                                              final controller = Get.find<
+                                                  CalenderDialogController>();
+                                              String hintText = "";
+
+                                              if (controller
+                                                      .selectedDate.value !=
+                                                  null) {
+                                                final selectedDay = controller
+                                                    .selectedDate.value.day
+                                                    .toString();
+                                                final diff = controller
+                                                    .differenceInDays.value;
+
+                                                final diffAkhir = diff + 1;
+
+                                                if (selectedDay.isNotEmpty) {
+                                                  hintText =
+                                                      diffAkhir.toString();
+                                                }
+                                              }
+
+                                              return TextFormField(
+                                                initialValue: null,
+                                                onChanged: (text) {
+                                                  // Your text processing function here
+                                                  // home.loadWisataAll(text);
+                                                },
+                                                decoration:
+                                                    InputDecoration.collapsed(
+                                                  hintText: hintText,
+                                                  border:
+                                                      UnderlineInputBorder(),
+                                                  hintStyle: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.grey[500],
+                                                    fontFamily: 'Mulish',
+                                                  ),
+                                                ),
+                                                onFieldSubmitted: (value) {
+                                                  // Handle submit function here
+                                                },
+                                              );
+                                            })),
                                       ),
                                       Text("hari"),
                                     ],
@@ -677,31 +722,42 @@ class NewRecurringTaskView extends GetView<NewRecurringTaskController> {
                           thickness: 1,
                           color: Colors.grey.shade300,
                         ),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            children: [
-                              Icon(CupertinoIcons.bell,
-                                  color: AppColors.primaryColor),
-                              SizedBox(width: 10),
-                              Text(
-                                "Pengikut",
-                                style: TextStyle(
-                                  fontSize: textScaleFactor <= 1.15 ? 13 : 10,
-                                  color: Colors.black,
+                        GestureDetector(
+                          onTap: () {
+                            showClockDialog();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Row(
+                              children: [
+                                Icon(CupertinoIcons.bell,
+                                    color: AppColors.primaryColor),
+                                SizedBox(width: 10),
+                                Text(
+                                  "Pengingat",
+                                  style: TextStyle(
+                                    fontSize: textScaleFactor <= 1.15 ? 13 : 10,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                              Spacer(),
-                              CircleAvatar(
-                                radius: 15,
-                                backgroundColor: AppColors.trinaryColor,
-                                child: Text(
-                                  "0",
-                                  style:
-                                      TextStyle(color: AppColors.primaryColor),
-                                ),
-                              ),
-                            ],
+                                Spacer(),
+                                Container(
+                                    padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: AppColors.trinaryColor,
+                                    ),
+                                    child: Obx(
+                                      () => Text(
+                                        DateFormat('HH:mm').format(
+                                            clockDialogController.selectedTime
+                                                .value), // Format hh:mm
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor),
+                                      ),
+                                    ))
+                              ],
+                            ),
                           ),
                         ),
                         Divider(

@@ -6,6 +6,19 @@ import 'package:task_app/app/routes/app_pages.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
+@pragma('vm:entry-point')
+void notificationTapBackground(NotificationResponse notificationResponse) {
+  // ignore: avoid_print
+  print('notification(${notificationResponse.id}) action tapped: '
+      '${notificationResponse.actionId} with'
+      ' payload: ${notificationResponse.payload}');
+  if (notificationResponse.input?.isNotEmpty ?? false) {
+    // ignore: avoid_print
+    print(
+        'notification action tapped with input: ${notificationResponse.input}');
+  }
+}
+
 class NotificationService extends GetxService {
   static NotificationService? _instance;
   static NotificationService get instance {
@@ -43,7 +56,9 @@ class NotificationService extends GetxService {
       requestBadgePermission: true,
       requestSoundPermission: true,
       onDidReceiveLocalNotification: (id, title, body, payload) {
-        Get.to(() => DetailReminderView(payload: payload));
+        if (payload != null) {
+          Get.to(() => DetailReminderView(payload: payload));
+        }
       },
     );
 
@@ -55,22 +70,22 @@ class NotificationService extends GetxService {
     await flutterLocalNotificationsPlugin.initialize(
       settings,
       onDidReceiveNotificationResponse: _onSelectNotification,
-      onDidReceiveBackgroundNotificationResponse: _onSelectNotification,
+      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
     _isInitialized = true;
+    _initNotificationDetails();
   }
 
   void _initNotificationDetails() {
     final AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
-      channelId,
-      channelName,
-      channelDescription: channelDesc,
-      playSound: true,
-      priority: Priority.high,
-      importance: Importance.high,
-      icon: '@mipmap/ic_launcher',
-    );
+        AndroidNotificationDetails(channelId, channelName,
+            channelDescription: channelDesc,
+            playSound: true,
+            priority: Priority.high,
+            importance: Importance.high,
+            icon: '@mipmap/ic_launcher',
+            ongoing: true,
+            autoCancel: false);
 
     final DarwinNotificationDetails iOSDetails = DarwinNotificationDetails(
       presentAlert: true,
@@ -82,16 +97,6 @@ class NotificationService extends GetxService {
       android: androidDetails,
       iOS: iOSDetails,
     );
-  }
-
-  Future<void> _initializeTimeZone() async {
-    try {
-      tz.initializeTimeZones();
-      // You might want to set a specific timezone here
-      // tz.setLocalLocation(tz.getLocation('America/New_York'));
-    } catch (e) {
-      printError(info: 'Timezone initialization error: $e');
-    }
   }
 
   Future<void> requestIOSPermissions() async {
@@ -207,7 +212,7 @@ class NotificationService extends GetxService {
   void _onSelectNotification(NotificationResponse response) {
     if (response.payload != null) {
       print("Notification response: ${response.payload}");
-      Get.to(() => DetailReminderView(payload: response.payload));
+      Get.to(() => DetailReminderView(payload: response.payload!));
     }
   }
 }

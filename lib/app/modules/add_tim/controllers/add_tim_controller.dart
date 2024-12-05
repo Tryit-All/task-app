@@ -11,24 +11,24 @@ class AddTimController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    member.addAll([
-      Member(
-          'Amy Vis', 'Admin', 'https://randomuser.me/api/portraits/men/70.jpg'),
-      Member('M Daffa', 'Manager',
-          'https://randomuser.me/api/portraits/men/72.jpg'),
-      Member('Fikri Maulana', 'Admin',
-          'https://randomuser.me/api/portraits/men/71.jpg'),
-      Member('Jean Gunnhildr', '',
-          'https://randomuser.me/api/portraits/men/73.jpg'),
-      Member(
-          'Ciko Saputra', '', 'https://randomuser.me/api/portraits/men/74.jpg'),
-      Member(
-          'Achmad Faris', '', 'https://randomuser.me/api/portraits/men/75.jpg'),
-      Member('Huanfarey', '', 'https://randomuser.me/api/portraits/men/76.jpg'),
-      Member('S Tina', '', 'https://randomuser.me/api/portraits/men/77.jpg'),
-      Member(
-          'Ananda Fer', '', 'https://randomuser.me/api/portraits/men/78.jpg'),
-    ]);
+    // member.addAll([
+    //   Member(
+    //       'Amy Vis', 'Admin', 'https://randomuser.me/api/portraits/men/70.jpg'),
+    //   Member('M Daffa', 'Manager',
+    //       'https://randomuser.me/api/portraits/men/72.jpg'),
+    //   Member('Fikri Maulana', 'Admin',
+    //       'https://randomuser.me/api/portraits/men/71.jpg'),
+    //   Member('Jean Gunnhildr', '',
+    //       'https://randomuser.me/api/portraits/men/73.jpg'),
+    //   Member(
+    //       'Ciko Saputra', '', 'https://randomuser.me/api/portraits/men/74.jpg'),
+    //   Member(
+    //       'Achmad Faris', '', 'https://randomuser.me/api/portraits/men/75.jpg'),
+    //   Member('Huanfarey', '', 'https://randomuser.me/api/portraits/men/76.jpg'),
+    //   Member('S Tina', '', 'https://randomuser.me/api/portraits/men/77.jpg'),
+    //   Member(
+    //       'Ananda Fer', '', 'https://randomuser.me/api/portraits/men/78.jpg'),
+    // ]);
   }
 
   @override
